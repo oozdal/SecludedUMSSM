@@ -687,22 +687,26 @@ class MyPySLHA():
 	self.NMIX18 = self.allcontent.blocks["NMNMIX"][1,8]
 	self.NMIX19 = self.allcontent.blocks["NMNMIX"][1,9]
 
-    def AddXSecBlock(self, SLHAFile, Particle1,Particle2, XSEC):
+    def AddXSecBlock(self, SLHAFile, Destination, Particle1, Particle2, XSEC):
         self.SLHAFile  = os.path.abspath(SLHAFile)
-	self.Particle1 = Particle1
+        self.Destination = Destination
+        self.Particle1 = Particle1
 	self.Particle2 = Particle2
 	self.XSEC      = XSEC
 
-	self.xsecLine = "XSECTION  1.30E+04  2212 2212 2 "+self.Particle1+" "+self.Particle2+" # 10000 events, [pb], pythia8 for LO  0  0  0  0  0  0    "+"%.8E" % self.XSEC+" SModelSv1.1.3rc3"
+	self.xsecLine1 = "XSECTION  1.30E+04  2212 2212 2 "+self.Particle1+" "+self.Particle2+" # 10000 events, [pb], pythia8 for LO"
+        self.xsecline2 = "  0  0  0  0  0  0    "+"%.8E" % self.XSEC+" SModelSv1.2.2"
     	
+        self.RenameAndCopy(self.SLHAFile, self.Destination)
+
         # Open a file with access mode 'a'
-        file_object = open(self.SLHAFile, 'a')
- 
+        file_object    = open(self.Destination, 'a')
+
         # Append 'hello' at the end of file
         file_object.write("\n")
-        file_object.write(self.xsecLine)
+        file_object.write(self.xsecLine1+"\n")
+        file_object.write(self.xsecline2)
         file_object.write("\n")
 
         # Close the file
         file_object.close()
-
