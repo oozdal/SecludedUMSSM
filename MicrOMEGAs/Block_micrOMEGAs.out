@@ -1,0 +1,35 @@
+Block micrOMEGAs
+   400   3.758267E+03   #MZp
+   401   1.242097E+02   #mh1
+   402   1.680826E+03   #mh2
+   403   1.901926E+03   #mh3
+   404   2.757410E+03   #mh4
+   405   3.745599E+03   #mh5
+   406   4.996077E+03   #mh6
+   407   3.720079E+03   #a1
+   408   5.031060E+03   #a2
+   409   3.746188E+03   #h1+
+   700   1.116867E-01   # relic density 
+   100   5.256145E-01   # ~N1 ~N1 -> Ah4 Ah4
+   101   3.257058E-01   # ~N1 ~N1 -> Ah3 Ah4
+   102   6.020348E-02   # ~N1 ~N1 -> Wm Wp
+   103   3.035935E-02   # ~N1 ~N1 -> h1 h1
+   104   2.991482E-02   # ~N1 ~N1 -> Z Z
+   105   2.414916E-02   # ~N1 ~N1 -> Ah3 Ah3
+   306   9.524477E-31   #sigmaV [cm^3/s]
+   307   1.673925E-21   #Photon flux [cm^2 s GeV]^{-1}
+   308   8.605870E-20   #Positron flux [cm^2 sr s GeV]^{-1}
+   309   2.150799E-18   #Antiproton flux [cm^2 sr s GeV]^{-1}
+   201   1.516173E-12   #P SI [pb]
+   202   4.081090E-10   #P SD [pb]
+   203   1.551206E-12   #N SI [pb]
+   204   8.279541E-10   #N SD [pb]
+   301   2.404465E-06   #73Ge: Total number of events [day/kg]
+   302   3.711396E-06   #131Xe: Total number of events [day/kg]
+   303   2.502536E-07   #23Na: Total number of events [day/kg]
+   304   3.637813E-06   #I127: Total number of events [day/kg]
+   305   4.092726E-10   #IceCube22 exclusion confidence level
+   903   8.980836E-03   #cs(pp-> Zp)
+   904   5.793021E-04   #cs(pp-> ~c1 ~C1)
+   905   1.003766E-04   #cs(pp-> ~c1 ~N2)
+   906   2.733990E-05   #cs(pp-> ~N2 ~C1)
