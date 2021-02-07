@@ -9,6 +9,9 @@ from __future__ import print_function
 """ Import basic functions (this file must be executed in the installation folder) """
 
 import os
+import sys
+sys.path.append("/home/oo1m20/softwares/smodels-1.2.2/")
+
 from smodels import particlesLoader
 from smodels.theory import slhaDecomposer,lheDecomposer
 from smodels.tools.physicsUnits import fb, GeV, TeV
@@ -22,11 +25,11 @@ class MySModelS():
     def __init__(self):
         pass
     
-    def RunSModelS(self,SLHAFilePath):
+    def RunSModelS(self,SLHAFilePath,SummaryFilePath):
         # Set the path to the database
-        database = Database("./smodels-database/")
+        database = Database("/home/oo1m20/softwares/smodels-1.2.2/smodels-database")
 
-        SummaryFilePath = os.path.abspath("/Users/oozdal/hepwork/smodels-1.2.2/Summary.txt")
+        self.SummaryFilePath = os.path.abspath(SummaryFilePath)
 
         #Define your model (list of rEven and rOdd particles)
         particlesLoader.load( 'smodels.share.models.secumssm' ) #Make sure all the model particles are up-to-date
@@ -48,7 +51,7 @@ class MySModelS():
         else:
             toplist = lheDecomposer.decompose(lhefile, doCompress=True,doInvisible=True, minmassgap=mingap)
         # Access basic information from decomposition, using the topology list and topology objects:
-        f= open(SummaryFilePath,"a+")
+        f= open(self.SummaryFilePath,"a+")
         print( "\n Decomposition Results: ", file=f )
         print( "\t  Total number of topologies: %i " %len(toplist), file=f )
         nel = sum([len(top.elementList) for top in toplist])
@@ -113,14 +116,12 @@ class MySModelS():
                     print( 'Chi2, likelihood=', theoryPrediction.chi2, theoryPrediction.likelihood, file=f )
                 if r > rmax:
                     rmax = r
-                    self.rmax = rmax
                     bestResult = expResult.globalInfo.id
-                    self.bestResult = bestResult
 
         # Print the most constraining experimental result
-        print( "\nThe largest r-value (theory/upper limit ratio) is ",self.rmax, file=f )
-        if self.rmax > 1.:
-            print( "(The input model is likely excluded by %s)" %self.bestResult, file=f )
+        print( "\nThe largest r-value (theory/upper limit ratio) is ",rmax, file=f )
+        if rmax > 1.:
+            print( "(The input model is likely excluded by %s)" %bestResult, file=f )
         else:
             print( "(The input model is not excluded by the simplified model results)", file=f )
 

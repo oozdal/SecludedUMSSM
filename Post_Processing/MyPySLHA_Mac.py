@@ -3,10 +3,10 @@ import numpy as np
 import os
 import shutil
 import sys
-sys.path.append("/home/oo1m20/softwares/pyslha-3.2.3/")
-sys.path.append("/home/oo1m20/softwares/Shapely-1.6.4.post2/")
+sys.path.append("/home/oo4g19/softwares/pyslha-3.2.3/")
+sys.path.append("/home/oo4g19/softwares/Shapely-1.6.4.post2/")
 import pyslha
-from shapely.geometry import Point, Polygon
+#from shapely.geometry import Point, Polygon
 from math import *
 from scipy.interpolate import interp1d
 import subprocess
@@ -293,8 +293,7 @@ class MyPySLHA():
 
     def Erase(self,FilePathToErase):
         self.FilePathToErase = FilePathToErase
-        os.remove(self.FilePathToErase)
-        print ("LHA File Removed!")
+        if os.path.isfile(self.FilePathToErase): os.remove(self.FilePathToErase)
 
     def RD_difference(self):
         self.PlanckResult  = 0.1187        
@@ -545,7 +544,7 @@ class MyPySLHA():
     def RunSPheno(self, LHAInput):
 
 #        p = subprocess.call("./../../../softwares/SPheno-4.0.4/bin/SPhenosec_UMSSM "+str(LHAInput),shell=True)
-        p = subprocess.call("./../../../../../home/oo1m20/softwares/SPheno-4.0.4/bin/SPhenosec_UMSSM "+str(LHAInput),shell=True)
+        p = subprocess.call("./../../../../../home/oo4g19/softwares/SPheno-4.0.4/bin/SPhenosec_UMSSM "+str(LHAInput),shell=True)
 
     def MassBounds(self):
 
@@ -583,8 +582,7 @@ class MyPySLHA():
         self.LSPcontraint = False
 
 #        if (self.allcontent.blocks["LSP"][1] == 1000022) or (self.allcontent.blocks["LSP"][1] == 1000012): self.LSPcontraint = True
-#        if (self.allcontent.blocks["LSP"][1] == 1000022): self.LSPcontraint = True
-        if (self.allcontent.blocks["LSP"][1] == 1000012): self.LSPcontraint = True
+        if (self.allcontent.blocks["LSP"][1] == 1000022): self.LSPcontraint = True
         else: self.LSPcontraint == False
 
         return self.LSPcontraint
@@ -634,7 +632,7 @@ class MyPySLHA():
 
     def RunMicrOMEGAs(self, LHAInput):
 
-        p = subprocess.call("./../../../softwares/micromegas_5.0.8/secluded_UMSSM/myOmega "+str(LHAInput),shell=True)
+        p = subprocess.call("timeout 300s ./../../../../hepwork/micromegas_5.0.9/secUMSSM/myOmega "+str(LHAInput),shell=True)
 
     def LHAwithDM(self, PathLHAfile, PathMicrOMEGAsResult, PathLHAfileWithDM):
 #        c = subprocess.call("timeout 5 cat "+str(PathLHAfile)+" "+str(PathMicrOMEGAsResult)+" > "+str(PathLHAfileWithDM),shell=True)
@@ -668,7 +666,7 @@ class MyPySLHA():
     def Cha1Chi1Excl(self,test_Cha1, test_Chi1):
         self.test_Cha1 = abs(test_Cha1)
         self.test_Chi1 = abs(test_Chi1)
-        exec(open("/home/oo4g19/softwares/ExpDATA/ExDATA.py").read())
+        exec(open("/Users/oozdal/ExpDATA/ExDATA.py").read())
         self.coord = []
         for i in range(len(observedATLAS_CharNeut_139fb_Cha1)):
             self.coord.append((observedATLAS_CharNeut_139fb_Cha1[i], observedATLAS_CharNeut_139fb_Chi1[i]))
@@ -687,6 +685,29 @@ class MyPySLHA():
         self.NMIX17 = self.allcontent.blocks["NMNMIX"][1,7]
         self.NMIX18 = self.allcontent.blocks["NMNMIX"][1,8]
         self.NMIX19 = self.allcontent.blocks["NMNMIX"][1,9]
+
+    def Chi2Content(self):
+        self.NMIX21 = self.allcontent.blocks["NMNMIX"][2,1]
+        self.NMIX22 = self.allcontent.blocks["NMNMIX"][2,2]
+        self.NMIX23 = self.allcontent.blocks["NMNMIX"][2,3]
+        self.NMIX24 = self.allcontent.blocks["NMNMIX"][2,4]
+        self.NMIX25 = self.allcontent.blocks["NMNMIX"][2,5]
+        self.NMIX26 = self.allcontent.blocks["NMNMIX"][2,6]
+        self.NMIX27 = self.allcontent.blocks["NMNMIX"][2,7]
+        self.NMIX28 = self.allcontent.blocks["NMNMIX"][2,8]
+        self.NMIX29 = self.allcontent.blocks["NMNMIX"][2,9]
+
+    def Chi3Content(self):
+        self.NMIX31 = self.allcontent.blocks["NMNMIX"][3,1]
+        self.NMIX32 = self.allcontent.blocks["NMNMIX"][3,2]
+        self.NMIX33 = self.allcontent.blocks["NMNMIX"][3,3]
+        self.NMIX34 = self.allcontent.blocks["NMNMIX"][3,4]
+        self.NMIX35 = self.allcontent.blocks["NMNMIX"][3,5]
+        self.NMIX36 = self.allcontent.blocks["NMNMIX"][3,6]
+        self.NMIX37 = self.allcontent.blocks["NMNMIX"][3,7]
+        self.NMIX38 = self.allcontent.blocks["NMNMIX"][3,8]
+        self.NMIX39 = self.allcontent.blocks["NMNMIX"][3,9]
+
 
     def AddXSecBlock(self, SLHAFile, Particle1, Particle2, XSEC):
         self.SLHAFile  = os.path.abspath(SLHAFile)
@@ -709,9 +730,59 @@ class MyPySLHA():
         # Close the file
         file_object.close()
 
+    def OrderingScalarParticles(self,Scalar1,Scalar2,Scalar3,Scalar4,Scalar5,Scalar6):
+        self.Scalar1 = Scalar1
+        self.Scalar2 = Scalar2
+        self.Scalar3 = Scalar3
+        self.Scalar4 = Scalar4
+        self.Scalar5 = Scalar5
+        self.Scalar6 = Scalar6
 
+        self.Scalar_list = []
+        self.Scalar_list.append(self.Scalar1)
+        self.Scalar_list.append(self.Scalar2)
+        self.Scalar_list.append(self.Scalar3)        
+        self.Scalar_list.append(self.Scalar4)
+        self.Scalar_list.append(self.Scalar5)
+        self.Scalar_list.append(self.Scalar6)        
+       
+        self.Deg    = []
+        self.NonDeg = [] 
+    
+        for i1 in range(6):
+            for i2 in range(i1+1,6):
+                if np.isclose(self.Scalar_list[i1], self.Scalar_list[i2], 1e-1, 0.0) == True: 
+                    self.Deg.append(self.Scalar_list[i1])
+                    self.Deg.append(self.Scalar_list[i2]) 
 
+        for ii in range(len(self.Scalar_list)):
+            if self.Scalar_list[ii] not in self.Deg:
+                self.NonDeg.append(self.Scalar_list[ii])
 
+        self.degheavy = np.empty(2)
+        self.deglight = np.empty(2)
 
+        if self.Deg[0]+self.Deg[1] > self.Deg[2]+self.Deg[3]:
+            self.degheavy[0] = self.Deg[0]
+            self.degheavy[1] = self.Deg[1]
+            self.deglight[0] = self.Deg[2] 
+            self.deglight[1] = self.Deg[3] 
+        else:
+            self.degheavy[0] = self.Deg[2]
+            self.degheavy[1] = self.Deg[3]
+            self.deglight[0] = self.Deg[0]
+            self.deglight[1] = self.Deg[1]            
 
+    def isclose(self, a, b, rel_tol, abs_tol):
+        return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
+    def ReadSModelSResults(self,SModelSfile):
+        self.SModelSfile = SModelSfile
+        with open(self.SModelSfile) as fh:
+            while True:
+                line = fh.readline()
+                if line.startswith('The largest r-value'):
+                    line_split = line.split()
+                    self.r_value = float(line_split[-1])
+                if not line:
+                    break
